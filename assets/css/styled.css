@@ -1,0 +1,3062 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  max-width: 100%;
+  /* overflow-x: hidden;  */
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  max-width: 100%;
+  overflow-x: hidden; 
+}
+a {
+  text-decoration: none;
+}
+:root {
+  --item1-transform: translate(-100%, -5%) scale(1.5);
+  --item1-filter: blur(30px);
+  --item1-zIndex: 11;
+  --item1-opacity: 0;
+
+  --item2-transform: translate(0, 0);
+  --item2-filter: blur(0);
+  --item2-zIndex: 10;
+  --item2-opacity: 1;
+
+  --item3-transform: translate(50%, 10%) scale(0.8);
+  --item3-filter: blur(10px);
+  --item3-zIndex: 9;
+  --item3-opacity: 1;
+
+  --item4-transform: translate(90%, 20%) scale(0.5);
+  --item4-filter: blur(30px);
+  --item4-zIndex: 8;
+  --item4-opacity: 1;
+
+  --item5-transform: translate(120%, 30%) scale(0.3);
+  --item5-filter: blur(40px);
+  --item5-zIndex: 7;
+  --item5-opacity: 0;
+}
+.parent {
+  display: flex;
+  flex-direction: column;
+  /* Crucial for sticky to work: overflow must NOT be hidden/auto */
+  overflow: visible;
+  height: auto;
+  position: relative;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+.announcement-bar {
+  background-color: #645bff; /* Your brand purple */
+  color: white;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1001; /* Above the nav */
+}
+
+nav {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+
+  /* Z-Index High enough to stay on top */
+  z-index: 9999;
+
+  width: 100%; /* CHANGED FROM 100vw */
+  max-width: 100%; /* Safety lock */
+  box-sizing: border-box; /* PREVENTS PADDING FROM ADDING WIDTH */
+  height: 9vh;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2%;
+
+  color: white;
+  background-color: black;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+
+  align-self: flex-start;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 2. Show on Mobile */
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.left img {
+  height: 30px; /* Constrain logo size */
+}
+
+/* Font Styling for Headers */
+h1,
+h2,
+h3,
+h5,
+/* .brand-name, */
+.BigText {
+  font-family: "Anton", sans-serif;
+  font-weight: bold;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0; /* Remove default browser margins */
+  display: flex;
+  flex-direction: row;
+}
+.tall-text {
+  font-family: "Impact", sans-serif;
+  font-weight: bold;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0; /* Remove default browser margins */
+  display: flex;
+  flex-direction: row;
+}
+
+/* Container Spacing */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 2rem; 
+}
+
+/* Base Link Styling */
+.right h4 {
+  position: relative; /* CRITICAL: Keeps the underline attached to the word */
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-family: "Librebaskerville", sans-serif;
+  font-weight: bold;
+}
+
+.right h4 a {
+  text-decoration: none;
+  color: #e3e3e3; 
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* The Animated Underline (Invisible by default) */
+.right h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0px; /* Sits right at the bottom edge of the padding */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; /* Starts at 0 width */
+  height: 2px;
+  background-color: #645bff; /* Jilomaac Purple */
+  border-radius: 2px;
+  box-shadow: 0px 1px 4px rgba(100, 91, 255, 0.4);
+  /* Cubic-bezier makes the animation snap and slow down smoothly */
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+}
+
+/* ============================ */
+/* HOVER STATE                  */
+/* ============================ */
+.right h4:hover a {
+  color: #fff; /* Brighten text */
+  text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.3); /* Subtle glow */
+}
+
+/* Expand the line to 70% width on hover */
+.right h4:hover::after {
+  width: 70%; 
+  height: 3px;
+}
+
+/* ============================ */
+/* ACTIVE STATE (Current Page)  */
+/* ============================ */
+/* Turn text purple */
+.right h4.active a {
+  color: #645bff; 
+  text-shadow: none;
+}
+
+/* Lock the underline permanently */
+.right h4.active::after {
+  width: 70%; 
+  height: 3px;
+  background-color: #645bff;
+}
+
+.rightmost {
+  display: flex;
+  justify-content: flex-end; /* 'flex-end' is safer than 'right' in flexbox */
+  align-items: center;
+  padding-right: 7px;
+  gap: 1rem; /* Consistent spacing */
+  
+  /* --- THE FIX --- */
+  width: auto; /* Replaces the hardcoded 300px */
+  /* flex-grow: 1;  <-- DELETE THIS LINE ENTIRELY */
+  transition: width 0.5s ease;
+}
+
+.rightmost h4 {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-family: "Librebaskerville", sans-serif;
+  font-weight: bold;
+}
+
+.shop {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* --- CART BADGE FIX --- */
+.cart-badge {
+  position: absolute;
+  top: -5px; /* Moved slightly down */
+  right: -8px; /* Moved slightly left */
+
+  background-color: #ff073c; /* Bright Red */
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #000; /* Black border to separate from icon */
+  z-index: 99999; /* Forces it to be the top layer */
+  pointer-events: none; /* Allows you to click the cart icon "through" the badge */
+}
+/* Container: Sleek pill shape */
+.back-cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #9ca3af; /* Soft Gray */
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap; /* Prevents text from stacking ever */
+}
+
+/* Hover State */
+.back-cart-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Arrow Icon */
+.arrow-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy spring effect */
+}
+
+/* Hover: Slide left */
+.back-cart-btn:hover .arrow-icon {
+    transform: translateX(-4px);
+}
+
+/* Click: Slide deeper + Green flash */
+.back-cart-btn:active .arrow-icon {
+    transform: translateX(-8px);
+    color: #22C55E;
+}
+
+
+/* Container: Starts as a small circle */
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #292929;
+  border-radius: 50px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+
+  /* Initial State (Closed) */
+  width: 50px;
+  height: 50px;
+  overflow: hidden; /* Hides the input when closed */
+  transition: width 0.5s ease; /* Smooth expansion */
+}
+
+/* Active State (Expanded) - Added via JS */
+.search.active {
+  width: 250px;
+}
+
+/* The Search Icon Container */
+.search .svgcon {
+  min-width: 50px; /* Keep icon fixed size */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* The Input Field Container */
+.bar {
+  flex-grow: 1; /* Takes up remaining space */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease 0.1s; /* Fade in slightly after width expands */
+}
+
+/* Show input when active */
+.search.active .bar {
+  opacity: 1;
+}
+
+.search .bar input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  padding-right: 10px;
+}
+
+/* The Close (X) Button */
+.x {
+  position: absolute;
+  right: 30px;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none; /* Unclickable when hidden */
+  transition: opacity 0.3s;
+}
+
+/* Show X when active */
+.search.active .x {
+  opacity: 1;
+  pointer-events: auto; /* Clickable now */
+}
+.profile-container {
+  position: relative;
+  display: inline-block;
+  /* margin-left: 20px; */
+}
+
+.avatar-trigger {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  /* border: 2px solid blue; */
+  transition: transform 0.2s ease;
+}
+
+.avatar-trigger:hover {
+  transform: scale(1.05); /* Subtle pop effect */
+}
+
+/* The Circle Image/Initial */
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* This is the Slate Blue background from the "K" in your image */
+  background-color: #3e4b5b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 2rem;
+  border: none;
+}
+
+/* The Green Status Dot (Exact Replica) */
+.status-dot {
+  position: absolute;
+  top: 35px; /* Adjusted to sit exactly on the edge */
+  left: 35px;
+  width: 10px;
+  height: 10px;
+  background-color: #03f8a7; /* Bright Green */
+  border: 2px solid white; /* The white "cutout" ring */
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 3. The Dropdown Card (The "Dribbble" Style) */
+.profile-dropdown {
+  /* ... keep your existing styles ... */
+  z-index: 30000;
+  position: absolute;
+  top: 60px;
+  right: -10px;
+  min-width: 400px;
+  height: auto;
+  min-height: 150px;
+  background: white;
+  border-radius: 16px;
+  box-shadow:
+    0px 15px 50px 0px rgba(27, 32, 50, 0.1),
+    0px 0px 0px 1px rgba(0, 0, 0, 0.03);
+  padding: 24px 0 10px 0;
+  transform-origin: top right;
+  display: block;
+
+  /* HIDDEN STATE (Default) */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.98);
+  pointer-events: none;
+
+  /* THE EXIT ANIMATION (Triggered when mouse leaves) */
+  /* This reads: "Wait 2s, then fade out over 0.3s" */
+  transition:
+    opacity 0.3s ease 2s,
+    transform 0.3s ease 2s,
+    visibility 0s linear 2.3s; /* Visibility waits for opacity to finish */
+}
+/* 2. THE INVISIBLE BRIDGE (Crucial Bug Fix) */
+/* This fills the empty gap between the avatar and the menu so the mouse never "leaves" */
+.profile-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* Extends 20px up towards the avatar */
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: transparent; /* Invisible */
+}
+.profile-container:hover .profile-dropdown,
+.profile-dropdown:hover {
+  /* VISIBLE STATE */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+
+  /* THE ENTER ANIMATION (Triggered immediately on hover) */
+  /* We override the delay to 0s so it opens instantly */
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 4. The Dropdown Header (Big Avatar + Name) */
+.dropdown-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.big-avatar {
+  width: 64px;
+  height: 64px;
+  font-size: 2.2rem;
+
+  margin-bottom: 12px;
+  position: relative; /* For the larger green dot */
+  align-items: center; /* Centers the letter inside the circle */
+  justify-content: center; /* Centers the letter inside the circle */
+}
+
+/* A larger green dot for the inside menu */
+.big-avatar .status-dot {
+  width: 16px;
+  height: 16px;
+  border-width: 3px;
+  top: 49px;
+  left: 49px;
+}
+
+.user-name {
+  text-align: center; /* Ensures text stays centered if it wraps */
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0d0c22;
+  width: 100%;
+}
+/* Container for the links */
+.dropdown-linked {
+  display: flex;
+  flex-direction: column; /* Stacks items vertically, not inline */
+  width: 100%; /* Ensures it spans full width */
+  padding: 8px 0; /* Slight padding top/bottom for the list */
+  align-items: flex-start;
+  padding: 12px 24px 0 24px;
+}
+
+/* Individual Links */
+.dropdown-linked a {
+  display: block;
+  width: 100%; /* Forces the link to fill the container width */
+  text-align: left; /* STARTS TEXT FROM LEFT */
+  padding: 8px 24px; /* Restored padding so text isn't stuck to the edge */
+
+  color: #6e6d7a; /* Muted gray text */
+  text-decoration: none;
+  font-size: 15px; /* 15px looks closer to the original than 16px */
+  font-weight: 500; /* Slightly thicker font for legibility */
+  text-transform: none !important;
+  box-sizing: border-box; /* Ensures padding doesn't break the layout */
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease; /* Fast, snappy transition */
+}
+
+.dropdown-linked a,
+.sign-out-area a {
+  position: relative;
+  display: inline-block; /* CRITICAL: Makes element size match text length */
+  width: fit-content; /* Modern browser support to wrap text tightly */
+  margin-bottom: 12px; /* Add spacing between links */
+  padding: 0; /* Remove internal padding so line sits flush */
+
+  color: #6e6d7a;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* 5. THE LOADING LINE (Restricted to Text Width) */
+.dropdown-linked a::after,
+.sign-out-area a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Sit slightly below the text baseline */
+  left: 0;
+  width: 0%; /* Start hidden */
+  height: 2px; /* Elegant thin line */
+  background-color: #645bff;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 6. HOVER EFFECTS */
+.dropdown-linked a:hover,
+.sign-out-area a:hover {
+  color: #645bff;
+  background: transparent;
+}
+
+.dropdown-linked a:hover::after,
+.sign-out-area a:hover::after {
+  width: 100%; /* Expands to match the TEXT width only */
+}
+
+/* 7. SIGN OUT AREA ADJUSTMENTS */
+.sign-out-area {
+  width: 100%;
+  border-top: 1px solid #f3f3f4;
+
+  box-sizing: border-box;
+}
+.sign-out-area a {
+  margin-bottom: 0; /* Remove bottom margin for the last item */
+}
+
+/* Style for the "Sign Out" area to keep it separate */
+.sign-out-area {
+  width: 100%;
+  text-align: left;
+  border-top: 1px solid #e7e7e9;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+/* 1. Base Link Style (Position Relative needed for the bar) */
+.sign-out-area a:hover {
+  color: #ef4444; /* Bright Red */
+}
+/* The Loading Bar Color */
+.sign-out-area a::after {
+  background-color: #ef4444;
+}
+
+@keyframes dropIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+/* --- MENU BUTTON STYLES (No Clash) --- */
+.menu-toggle-btn {
+  display: none; /* Hidden on Desktop */
+  cursor: pointer;
+  z-index: 10002; /* High z-index to stay clickable */
+  /* Remove any default button styling if necessary */
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+/* --- Hero Section --- */
+.hero1 {
+  position: relative;
+  /* border-radius: 50px; */
+  /* top: 10px; */
+  height: 75vh;
+  width: 100%;
+ 
+  /* border-radius: 10%px ; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #111;
+
+  z-index: 3000;
+  /* bottom: 40px; */
+}
+
+.hero1-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* border: 3px red solid; */
+  height: 100%;
+  z-index: 1;
+  /* border: 3px solid red; */
+}
+
+.hero1-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+/* --- Text Content --- */
+.hero-content {
+  position: relative;
+
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* border: 2px solid ; */
+  /* bottom: 50px; */
+}
+
+.main-title {
+  font-size: 6.9rem;
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -2px;
+  color: white;
+  animation: pulse 1.5s 3 ease-in-out;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  color: white;
+  animation: pulse 1.5s 3 ease-in-out;
+}
+
+.title-row h2 {
+  font-size: 8rem;
+  font-weight: 900;
+  line-height: 0.85;
+}
+.title-icon {
+  display: flex;
+
+  align-items: center;
+  padding: 0px;
+}
+.title-icon img {
+  height: 8rem;
+  /* width: 100%; */
+  object-fit: fill;
+}
+
+.outline-title {
+  font-size: 8rem;
+  font-weight: 900;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.6);
+}
+
+.buttton {
+  margin-top: 80px;
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 20px;
+  --arrow-stroke: 2px;
+
+  border: 0;
+  border-radius: 10px;
+  color: var(--secondary-color);
+  background: var(--primary-color);
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 1em 2em;
+  /* font-weight: bold;
+  font-size: 1rem; */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(100, 91, 255, 0.4);
+}
+
+.buttton:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(100, 91, 255, 0.6);
+}
+
+/* Add this to styled.css */
+
+.yuu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0;
+  background-color: black;
+}
+
+.yuu h1 {
+  justify-content: center;
+  color: #fff;
+  font-size: 3rem;
+  margin-bottom: 15px;
+  position: relative;
+  cursor: default; /* Optional: shows it's not a link */
+}
+
+/* The Line (Base State) */
+.yuu h1::after {
+  content: "";
+  display: block;
+  width: 20px; /* Starting width */
+  height: 5px;
+  background-color: #645bff;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+
+  /* THIS makes it animate smoothly */
+  transition: width 0.7s ease-in-out;
+}
+
+/* The Hover Effect */
+/* Read as: "When H1 is hovered, change the ::after" */
+.yuu h1:hover::after {
+  width: 250px; /* The grown width */
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden; /* Hides sliding photos */
+  /* border-radius: 12px; */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  background: #000;
+}
+/* --- CAROUSEL TRACK (The Container) --- */
+.carousel-track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  /* 1. Enable Scrolling */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  /* 2. Remove CSS Transitions (Use native scroll instead) */
+  transition: none;
+}
+
+/* Hide scrollbars for Chrome/Safari/Edge */
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbars for Firefox/IE */
+.carousel-track {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* --- INDIVIDUAL SLIDE (The Fix) --- */
+.slide {
+  /* 3. THE MAGIC FIX: Prevent shrinking to 0px */
+  flex: 0 0 100%;
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  /* 4. Ensure snapping works */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Ensure images fill the slide */
+.slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+/* Styling for the container of the video */
+.slide.video-slide {
+  position: relative;
+  overflow: hidden; /* CRITICAL: Crops the parts of the video that stick out */
+  width: 100%;
+  height: 100%;
+}
+
+/* The Magic "Cover" Code */
+.slide.video-slide iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the video perfectly */
+
+  /* These two rules force the video to be HUGE so it covers every corner */
+  /* It effectively zooms in until the slide is full */
+  width: 177.77vh; /* 16:9 Aspect Ratio based on height */
+  height: 56.25vw; /* 16:9 Aspect Ratio based on width */
+
+  /* Fallback safeguards */
+  min-width: 100%;
+  min-height: 100%;
+
+  /* Removes the mouse interaction so users can't click 'Pause' by mistake 
+     (Optional - remove this line if you want controls to work) */
+  pointer-events: none;
+}
+/* --- Default State (Desktop) --- */
+.media-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Style the Image */
+.desktop-visual {
+  display: block; /* Show image */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hide the Video initially */
+.mobile-visual {
+  display: none;
+}
+
+/* Ensure Text is on top */
+.text-overlay {
+  position: absolute;
+  z-index: 5;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  bottom: 50px;
+  top: 30%;
+  left: 70px;
+  color: white;
+  max-width: 500px;
+}
+
+.text-overlay .s26 b {
+  color: black;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  font-size: 2.5rem;
+  margin-right: 10px;
+}
+.text-overlay .s26 {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 100;
+  /* text-shadow: none; */
+  text-transform: none;
+}
+.text-overlay span {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 50;
+  /* text-shadow: none; */
+  display: inline-block; /* Required for transform to work on span/text */
+  transform: skewX(-10deg); /* Negative slants right, Positive slants left */
+  /* color: transparent; */
+  -webkit-text-stroke: 3px rgba(41, 82, 176, 0.8);
+}
+
+.highlights {
+  height: 1em; /* Scales with font size */
+  width: 1em;
+  display: flex;
+  /* border: 2px solid red; */
+  margin-top: 6px;
+}
+
+.highlights img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  /* color: red; */
+}
+
+#itel {
+  display: none;
+}
+
+.text-overlay h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+.text-overlay p {
+  font-size: 1.2rem;
+}
+.tite {
+  height: 70px;
+  width: 300px;
+  /* border: 3px solid red; */
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.tite img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+/* --- Premium Segmented Indicators --- */
+.indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px; /* Space between dashes */
+  z-index: 20;
+}
+
+.indicator {
+  width: 12px; /* DEFAULT: Small dot/dash when NOT active */
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+
+  /* IMPORTANT: Add 'width' to the transition so it grows smoothly */
+  transition:
+    width 0.3s ease,
+    background 0.3s;
+}
+
+/* NEW: Active State */
+/* This class must be added to the div via JavaScript when the slide is active */
+.indicator.active {
+  width: 45px; /* Expands to 45px only when active */
+  background: rgba(255, 255, 255, 0.4); /* Optional: brighter background */
+}
+
+/* The purple filler inside the dash */
+.indicator .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: #645bff;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #645bff;
+}
+
+/* Animation Class for Images (5 seconds) */
+.indicator .fill.animate {
+  transition: width 5s linear;
+  width: 100% !important;
+}
+/* Static Full State (For Videos or visited slides) */
+.indicator .fill.full {
+  transition: none;
+  width: 100% !important;
+}
+
+/* --- Navigation Buttons (Optional) --- */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+  background: rgba(0, 0, 0, 0.3); /* Dark see-through background */
+  backdrop-filter: blur(5px); /* Blurs the image behind the button */
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 200;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-btn:hover {
+  background: #645bff; /* Brand purple on hover */
+  border-color: #645bff;
+  box-shadow: 0 0 15px rgba(100, 91, 255, 0.6); /* Glow effect */
+  transform: translateY(-50%) scale(1.1); /* Slight grow */
+}
+.carousel-container button {
+  display: flex;
+  /* background-color: red; */
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: center;
+  z-index: 3000000000;
+  background: transparent;
+  text-align: center;
+}
+
+.prev-btn {
+  left: 0;
+}
+.next-btn {
+  right: 0;
+}
+
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 50px 20px;
+  background-color: #0b0f14;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 30px;
+  background: #121820;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.badge:hover {
+  transform: translateY(-5px);
+  border-color: #645bff;
+}
+
+.badge span {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+/* Icon styling */
+.badge svg {
+  width: 32px;
+  height: 32px;
+  stroke: #645bff; /* Makes icons purple */
+}
+.under {
+  /* background-color: red; */
+  color: white;
+  padding: 20px 0px 20px 20px;
+}
+
+.under h3 {
+  font-family: "Poppins";
+  font-weight: 700;
+  font-size: 1.5em;
+  color: #0b0f14;
+}
+
+.PRO {
+  /* height: 2000px; */
+  width: 100%;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+}
+.loading-text {
+  color: #888;
+  font-size: 1.2rem;
+  margin: 50px auto;
+  text-align: center;
+
+  /* Pulsing Animation */
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.product-grid {
+  display: grid;
+  padding: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+.product-card {
+  background: #f8f9fa; /* Slightly off-white for better contrast */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+  border-radius: 20px; /* Softer curves */
+  padding: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add a hover effect that lifts the card up */
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: #645bff; /* Purple border on hover */
+}
+
+/* Make the image float on hover */
+.product-card:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.product-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  /* border: 2px solid black; */
+  justify-content: center;
+}
+
+.product-card .specs {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.product-card .price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e90ff;
+  margin: 10px 0;
+}
+.product-card button {
+  margin-top: auto;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: #1e90ff;
+  color: white;
+  cursor: pointer;
+}
+.product-card {
+  cursor: pointer;
+}
+.buttton {
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 20px;
+  --arrow-stroke: 2px;
+
+  border: 0;
+  border-radius: 10px;
+  color: var(--secondary-color);
+  background: var(--primary-color);
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 1em 2em;
+  /* 
+  font-weight: bold;
+  font-size: 1rem; */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(100, 91, 255, 0.4);
+}
+.buttton .arrow::before {
+  content: "";
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  top: -3px;
+  right: 1px;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+.buttton:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(100, 91, 255, 0.6);
+}
+
+
+footer {
+  margin-top: 30px;
+  background-color: #0b0f14; /* Very dark blue/black */
+  color: #e3e3e3;
+  padding: 60px 5%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: "Inter", sans-serif;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: white;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-section a {
+  display: block;
+  color: #aaa;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.footer-section a:hover {
+  color: #645bff;
+  padding-left: 5px; /* Slight movement effect */
+}
+
+/* Newsletter Input */
+.footer-section input {
+  padding: 12px;
+  width: 70%;
+  border: 1px solid #333;
+  background: #121820;
+  color: white;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.footer-section button {
+  padding: 12px 20px;
+  background: #645bff;
+  border: none;
+  color: white;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.carousel {
+  position: relative;
+  margin-top: -50px;
+  /* padding: auto; */
+  height: 94vh;
+  overflow: hidden;
+  width: 100%;
+  /* background-color: #1e90ff; */
+}
+.carousel .list {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1140px;
+  max-width: 90%;
+  margin: auto;
+  height: 80%;
+}
+
+.carousel .list .item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  font-size: 15px;
+}
+.carousel .list .item img {
+  width: 50%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.carousel .list .item .detail {
+  opacity: 0;
+  pointer-events: none;
+}
+.carousel .list .item .intro {
+  /* display: flex; */
+  /* flex-direction: column; */
+  position: absolute;
+  /* align-items: center; */
+  /* justify-content: start; */
+  left: 17%;
+  top: 30%;
+  transform: translate(-50%);
+height: 600px;
+  width: 400px;
+  opacity: 0;
+  pointer-events: auto;
+  /* border: 3px solid green; */
+}
+.carousel .list .item:nth-child(2) .intro {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s;
+  position: relative;
+  z-index: 20;
+}
+
+.carousel .list .item:nth-child(n + 6) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel .list .item:nth-child(2) {
+  transform: var(--item2-transform);
+  filter: var(--item2-filter);
+  z-index: var(--item2-zIndex);
+  opacity: var(--item2-opacity);
+}
+.carousel .list .item:nth-child(1) {
+  transform: var(--item1-transform);
+  filter: var(--item1-filter);
+  z-index: var(--item1-zIndex);
+  opacity: var(--item1-opacity);
+  pointer-events: none;
+  /* pointer-events: var(); */
+}
+.carousel .list .item:nth-child(3) {
+  transform: var(--item3-transform);
+  filter: var(--item3-filter);
+  z-index: var(--item3-zIndex);
+  opacity: var(--item3-opacity);
+  pointer-events: none;
+}
+.carousel .list .item:nth-child(4) {
+  transform: var(--item4-transform);
+  filter: var(--item4-filter);
+  z-index: var(--item4-zIndex);
+  opacity: var(--item4-opacity);
+  pointer-events: none;
+}
+.carousel .list .item:nth-child(5) {
+  transform: var(--item5-transform);
+  filter: var(--item5-filter);
+  z-index: var(--item5-zIndex);
+  opacity: var(--item5-opacity);
+  pointer-events: none;
+}
+
+.arrows {
+  position: absolute;
+  bottom: 100px;
+  border: 3px;
+  /* THE CLEAN LAYOUT FIX */
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  
+  padding: 0 10px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: none; /* Let clicks pass through the invisible middle section */
+}
+
+
+.arrows #next,
+.arrows #prev {
+  pointer-events: auto; 
+  /* display: none; */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-family: monospace;
+  font-size: large;
+  font-weight: bold;
+  /* border: 1px solid #555; */
+  cursor: pointer;
+  box-shadow: none;
+  /* border: none; */
+  border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+  background: rgba(0, 0, 0, 0.3); /* Dark see-through background */
+  backdrop-filter: blur(5px);
+  /* background-color: transparent; */
+  color: white;
+}
+.arrows #next:hover,
+.arrows #prev:hover{
+  display: block;
+  background: #645bff; /* Brand purple on hover */
+  border-color: #645bff;
+  box-shadow: 0 0 15px rgba(100, 91, 255, 0.6); /* Glow effect */
+  transition: all 0.3s ease;
+}
+.arrows #back {
+  font-family: Poppins;
+  font-weight: 500;
+  border: none;
+  border-bottom: 1px solid #555;
+  letter-spacing: 3px;
+  background-color: transparent;
+  color: black;
+  opacity: 0;
+  cursor: pointer;
+  /* pointer-events: none; */
+  /* z-index: 70000; */
+  /* background-color: red; */
+}
+
+.carousel .list .item .intro .title {
+  font-size: 2em;
+  line-height: 0.8em;
+}
+.carousel .list .item .intro .topic {
+  font-size: 4em;
+  font-weight: 500;
+}
+.carousel .list .item .intro .des {
+  font-size: small;
+}
+.carousel .list .item .intro .seeMore {
+  background-color: transparent;
+  border: none;
+  border: bottom 1px solid #555;
+  font-family: poppins;
+  font-weight: bold;
+  margin-top: 1.2em;
+  padding: 5px;
+}
+
+.carousel .list .item:nth-child(2) .intro .title,
+.carousel .list .item:nth-child(2) .intro .topic,
+.carousel .list .item:nth-child(2) .intro .des,
+.carousel .list .item:nth-child(2) .intro .seeMore {
+  opacity: 0;
+  animation: showContent 0.5s 0.7s ease-in-out 1 forwards;
+}
+
+@keyframes showContent {
+  from {
+    transform: translateY(50px);
+    filter: blur(30px);
+  }
+  to {
+    transform: translateY(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+.carousel .list .item:nth-child(2) .intro .seeMore {
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 30;
+}
+.carousel .list .item:nth-child(2) .intro .topic {
+  animation-delay: 0.9s;
+}
+.carousel .list .item:nth-child(2) .intro .des {
+  animation-delay: 1.1s;
+}
+.carousel .list .item:nth-child(2) .intro .seeMore {
+  animation-delay: 1.3s;
+}
+
+.carousel.next .list .item:nth-child(1) {
+  animation: positionItem2 0.5s ease-in-out 1 forwards;
+}
+@keyframes positionItem2 {
+  from {
+    transform: var(--item2-transform);
+    filter: var(--item2-filter);
+    z-index: var(--item2-zIndex);
+    opacity: var(--item2-opacity);
+  }
+}
+.carousel.next .list .item:nth-child(2) {
+  animation: positionItem3 0.7s ease-in-out 1 forwards;
+}
+@keyframes positionItem3 {
+  from {
+    transform: var(--item3-transform);
+    filter: var(--item3-filter);
+    z-index: var(--item3-zIndex);
+    opacity: var(--item3-opacity);
+  }
+}
+.carousel.next .list .item:nth-child(3) {
+  animation: positionItem4 0.9s ease-in-out 1 forwards;
+}
+@keyframes positionItem4 {
+  from {
+    transform: var(--item4-transform);
+    filter: var(--item4-filter);
+    z-index: var(--item4-zIndex);
+    opacity: var(--item4-opacity);
+  }
+}
+.carousel.next .list .item:nth-child(4) {
+  animation: positionItem5 1.1s ease-in-out 1 forwards;
+}
+@keyframes positionItem5 {
+  from {
+    transform: var(--item5-transform);
+    filter: var(--item5-filter);
+    z-index: var(--item5-zIndex);
+    opacity: var(--item5-opacity);
+  }
+}
+
+.carousel.prev .list .item:nth-child(2) {
+  animation: positionItem1 0.5s ease-in-out 1 forwards;
+}
+@keyframes positionItem1 {
+  from {
+    transform: var(--item1-transform);
+    filter: var(--item1-filter);
+    z-index: var(--item1-zIndex);
+    opacity: var(--item1-opacity);
+  }
+}
+
+.carousel.prev .list .item:nth-child(3) {
+  animation: positionItem2 0.7s ease-in-out 1 forwards;
+}
+.carousel.prev .list .item:nth-child(4) {
+  animation: positionItem3 0.9s ease-in-out 1 forwards;
+}
+.carousel.prev .list .item:nth-child(5) {
+  animation: positionItem4 1.1s ease-in-out 1 forwards;
+}
+
+.carousel .list .item {
+  transition:
+    left 0.5s,
+    opacity 0.5s,
+    width 0.5s;
+}
+.carousel.showDetail .list .item:nth-child(3),
+.carousel.showDetail .list .item:nth-child(4) {
+  left: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel.showDetail .list .item:nth-child(2) {
+  width: 100%;
+}
+.carousel.showDetail .list .item:nth-child(2) .intro {
+  opacity: 0;
+  pointer-events: none;
+}
+.carousel.showDetail .list .item:nth-child(2) img {
+  transition: right 0.5s;
+}
+.carousel.showDetail .list .item:nth-child(2) img {
+  right: 60%;
+}
+.carousel.showDetail .list .item:nth-child(2) .detail {
+  opacity: 1;
+  pointer-events: auto;
+  width: 50%;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel.showDetail .list .item .detail .title {
+  font-size: 3em;
+}
+.carousel.showDetail .list .item .detail .specifications {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  border-top: 1px solid #5555;
+  margin-top: 20px;
+}
+
+.carousel.showDetail .list .item .detail .specifications div {
+  width: 90px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.carousel.showDetail .list .item .detail .specifications div p:nth-child(1) {
+  font-weight: bold;
+}
+.checkout {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: flex-end;
+  margin-top: 50px;
+}
+.carousel.showDetail .list .item .detail .checkout button {
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 20px;
+  --arrow-stroke: 2px;
+
+  border: 0;
+  border-radius: 10px;
+  color: var(--secondary-color);
+  background: var(--primary-color);
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 1em 2em;
+  /* font-weight: bold;
+  font-size: 1rem; */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(100, 91, 255, 0.4);
+}
+.carousel.showDetail .list .item .detail .checkout button:nth-child(2):hover {
+  background-color: var(--hover-color);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(100, 91, 255, 0.6);
+}
+
+.carousel.showDetail .list .item .checkout button:nth-child(1) {
+  background-color: transparent;
+  color: black;
+  box-shadow: none;
+  border: 1px solid #555;
+}
+
+.carousel.showDetail .list .item:nth-child(2) .detail .title,
+.carousel.showDetail .list .item:nth-child(2) .detail .des,
+.carousel.showDetail .list .item:nth-child(2) .detail .specifications,
+.carousel.showDetail .list .item:nth-child(2) .detail .checkout {
+  opacity: 0;
+  animation: showContent 0.5s 1s ease-in-out 1 forwards;
+}
+.carousel.showDetail .list .item:nth-child(2) .detail .des {
+  animation-delay: 1.2s;
+}
+
+.carousel.showDetail .list .item:nth-child(2) .detail .specifications {
+  animation-delay: 1.4s;
+}
+.carousel.showDetail .list .item:nth-child(2) .detail .checkout {
+  animation-delay: 1.4s;
+}
+
+.carousel.showDetail #next,
+.carousel.showDetail #prev {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel.showDetail #back {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carousel::before {
+  width: 500px;
+  height: 300px;
+  content: "";
+  background-image: linear-gradient(45deg, #dc422a, blue);
+  position: absolute;
+  z-index: 0;
+  filter: blur(150px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-10%, -50%);
+  transition: 1s;
+}
+.carousel.showDetail::before {
+  transform: translate(-100%, -50%) rotate(70deg);
+}
+.varent {
+  display: flex;
+  /* gap:0; */
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.sidebar {
+  width: 200px; /* Slim professional sidebar */
+  background-color: #645bff;
+  border-bottom-right-radius: 100%;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.logo-stack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+
+  padding-left: 40px;
+}
+
+.brand-text {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-size: 2em;
+  color: #111;
+  /* margin: 20px 0; */
+}
+
+.logo-icon img {
+  width: 40px;
+  height: auto;
+}
+
+/* 2. Main Content (Holds Form + 3D) */
+.main-content {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row; /* Default: Side by Side */
+}
+
+/* --- SECTION A: FORM STYLING --- */
+.form-section {
+  flex: 1; /* Takes 50% width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 40px;
+}
+
+.form_container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+/* ALL MOBILE FIXES (Screens smaller than 768px) */
+@media (max-width: 768px) {
+
+  /* 3. Make sure the form container doesn't push outwards */
+  .form-section {
+    width: 100%;
+    padding: 10px; /* Reduce heavy padding on mobile */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+
+  .form_container {
+    width: 90%; /* Leaves a little breathing room on the edges */
+    max-width: 400px;
+    margin: 0 auto; /* Centers it perfectly */
+    box-sizing: border-box;
+  }
+
+  
+}
+
+.title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* Inputs */
+.input_container {
+  position: relative;
+  width: 100%;
+}
+
+.input_label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.input_field {
+  width: 100%;
+  padding: 12px 12px 12px 45px; /* Space for icon */
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background-color: #f9fafb;
+  color: #1f2937;
+}
+
+.input_field:focus {
+  outline: none;
+  border-color: #645bff;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(100, 91, 255, 0.1);
+}
+
+.icon {
+  position: absolute;
+  bottom: 11px;
+  left: 14px;
+  width: 20px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+/* Style for the Show/Hide Eye Icon */
+.eye-icon {
+  position: absolute;
+  right: 15px; /* Distance from the right edge */
+  bottom: 11px; /* Aligns vertically with the text */
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Add padding to the input so text doesn't type over the eye */
+#password_field {
+  padding-right: 40px;
+}
+
+/* Buttons */
+.sign-in_btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #645bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.sign-in_btn:hover {
+  background-color: #5046e5;
+}
+
+.social_btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.social_btn:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* Extras */
+.separator {
+  display: flex;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  gap: 15px;
+  margin: 5px 0;
+}
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #e5e7eb;
+  border: none;
+}
+
+.remember_container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.remember_container input {
+  accent-color: #645bff;
+  width: 16px;
+  height: 16px;
+}
+
+.signup-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.signup-footer a {
+  color: #645bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* --- SECTION B: 3D AGENT STYLING --- */
+.agent-section {
+  flex: 1; /* Takes the other 50% */
+  background: linear-gradient(
+    135deg,
+    #f3f4f6 0%,
+    #e0e7ff 100%
+  ); /* Subtle professional gradient */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Aligns model to bottom naturally */
+  overflow: hidden;
+}
+
+.agent-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+model-viewer {
+  width: 100%;
+  height: 100%;
+  --poster-color: transparent;
+  object-fit: contain;
+}
+/* --- FIXED DROPDOWN (PERFECT X) --- */
+
+/* 1. Container Styles */
+.mobile-dropdown-trigger {
+  display: none; /* Hidden on Desktop */
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 0;
+  background: transparent;
+}
+
+/* 2. SVG Line Styles */
+.mobile-dropdown-trigger svg {
+  display: block;
+  pointer-events: none; /* Ensures the click hits the div, not the line */
+}
+
+.mobile-dropdown-trigger svg path {
+  /* Smooth animation for movement and color change */
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease,
+    stroke 0.4s ease;
+  transform-origin: center; /* Vital for the perfect center X */
+  stroke: white; /* Default Color */
+}
+
+/* --- ACTIVE STATE (THE ANIMATION) --- */
+
+/* Change Color to Purple */
+.mobile-dropdown-trigger.active svg path {
+  stroke: #645bff;
+}
+
+/* Top Line: Move down 6px to absolute center (12), then Rotate */
+.mobile-dropdown-trigger.active .top {
+  transform: translateY(6px) rotate(45deg);
+}
+
+/* Middle Line: Fade out */
+.mobile-dropdown-trigger.active .middle {
+  opacity: 0;
+}
+
+/* Bottom Line: Move up 6px to absolute center (12), then Rotate */
+.mobile-dropdown-trigger.active .bottom {
+  transform: translateY(-6px) rotate(-45deg);
+}
+/* --- DROPDOWN MENU CONTAINER --- */
+/* =========================================
+   SIDEBAR MOBILE MENU (Reference Image Style)
+   ========================================= */
+
+
+/* ==========================================
+   MOBILE MENU OVERLAY (WHITE THEME)
+   ========================================== */
+.mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 99999;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.mobile-nav-overlay.is-active {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* FIX: Changed min-width to max-width so it fits on small phones */
+.mobile-nav-container {
+    width: 100%;
+   
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.mobile-nav-overlay.is-active .mobile-nav-container {
+    transform: translateY(0);
+}
+
+/* Header Section */
+.mobile-nav-header {
+  position: relative;
+  /* top: 10px; */
+  height: 9vh;
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100%!important;
+    align-items: center;
+    justify-content: space-between !important;
+    /* padding: 20px 24px; Increased padding */
+    
+    border-bottom: 1px solid #f3f4f6;
+    background-color: black;
+}
+
+.mobile-nav-title {
+
+    display: flex;
+    align-items: center;
+        
+}
+
+/* FIX: Removed the 0.8 scale to make the logo BIGGER */
+.mobile-nav-title .tall-text {
+
+
+  position: absolute;
+  left: 60px;
+    display: flex;
+    transform: scale(1); /* Full size */
+    margin: 0;
+}
+
+/* BIGGER Close Button */
+.mobile-close-btn {
+    display: flex;
+    position: absolute;
+    right: 30px;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Was 40px */
+    height: 50px; /* Was 40px */
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    color: #111827;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    /* margin-right: 60% !important; Forces it right */
+}
+
+/* Bigger Icon inside button */
+.mobile-close-btn .material-icons-round {
+    font-size: 30px; 
+}
+
+/* BIGGER Navigation Links */
+.mobile-nav-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    list-style: none;
+    margin: 0;
+}
+
+.mobile-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 0; /* More space to tap */
+    border-bottom: 1px solid #f9fafb;
+    text-decoration: none;
+    font-size: 1.5rem; /* BIGGER TEXT (was 1.25rem) */
+    font-weight: 600; /* Bolder text */
+    color: #111827; 
+    transition: all 0.2s ease;
+}
+
+/* BIGGER Arrows */
+.mobile-nav-icon {
+    color: #9ca3af;
+    font-size: 30px !important; 
+    transition: color 0.2s ease;
+}
+
+.mobile-nav-item:hover {
+    color: #645bff;
+    padding-left: 8px;
+}
+.mobile-nav-item:hover .mobile-nav-icon {
+    color: #645bff;
+}
+
+/* BIGGER Cart Button Area */
+.mobile-nav-footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* border: 3px solid green; */
+  
+  /* THIS CENTERS EVERYTHING HORIZONTALLY */
+  align-items: center; 
+  justify-content: center;
+  
+  background-color: #f9fafb;
+  /* padding: 30px 24px; Added padding back so it doesn't touch the bottom of the screen */
+  margin-bottom: 450px;   /* Pushes the footer to the bottom of the menu */
+}
+
+.mobile-cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 70%; /* Button will be 70% wide and perfectly centered */
+    background-color: #645bff;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 20px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 10px 15px -3px rgba(100, 91, 255, 0.3);
+    transition: transform 0.1s;
+}
+
+.mobile-cart-btn .material-icons-round {
+    font-size: 28px; /* BIGGER CART ICON */
+}
+
+.mobile-cart-btn:active {
+    transform: scale(0.98);
+}
+
+.mobile-login-area {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Ensures the text inside is centered */
+    width: 100%;
+}
+
+.mobile-login-link {
+    color: #645bff;
+    font-size: 1.1rem; /* BIGGER LOGIN LINK */
+    font-weight: bold;
+    text-decoration: none;
+}
+/* --- RESPONSIVE / MOBILE STYLES --- */
+@media screen and (max-width: 1024px) {
+  .varent {
+    gap: 20px;
+    flex-direction: column; /* Stack top to bottom */
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* 1. Sidebar becomes Top Bar */
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 20px;
+    border-radius: 0;
+  }
+
+  .logo-stack {
+    flex-direction: row;
+    gap: 20px;
+    border-bottom-left-radius: none;
+  }
+
+  .brand-text {
+    transform: none; /* No rotation */
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  /* 2. Stack Content */
+  .main-content {
+    flex-direction: column; /* Stack vertically */
+  }
+
+  /* 3. Agent goes ON TOP */
+  .agent-section {
+    height: 350px; /* Fixed height for visual header */
+    flex: none; /* Don't grow */
+    order: 1; /* First */
+    background: #645bff; /* Make it pop with brand color on mobile? Or keep gradient */
+    background: linear-gradient(180deg, #f3f4f6 0%, #dbeafe 100%);
+  }
+
+  /* 4. Form goes BOTTOM */
+  .form-section {
+    width: 100%;
+    order: 2; /* Second */
+    padding: 30px 20px;
+    background-color: white;
+    border-top-left-radius: 30px; /* Modern curved overlapping look */
+    border-top-right-radius: 30px;
+    margin-top: -30px; /* Pull form up over the agent background slightly */
+    z-index: 10;
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* --- MEDIA QUERY: SHOW ON MOBILE --- */
+@media screen and (max-width: 1024px) {
+  .mobile-dropdown-trigger {
+    display: flex !important; /* Force it to appear on mobile */
+  }
+}
+/* --- 7. RESPONSIVE (MOBILE) --- */
+
+@media screen and (max-width: 1024px) {
+  .search {
+    display: none;
+  }
+  /* Hide the desktop menu links */
+  nav .right {
+    display: none;
+  }
+  .navs .right {
+    display: none;
+  }
+  .main-title,
+  .title-row h2,
+  .outline-title {
+    font-size: 3.5rem;
+  }
+  .title-icon img {
+    height: 2.5rem;
+  }
+  nav h4 {
+    display: none;
+  }
+  .navs h4 {
+    display: none;
+  }
+  .carousel-container button {
+    display: none;
+  }
+  .hero1 {
+    height: 60vh;
+  }
+  .hero1-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    z-index: 1;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .carousel-container {
+    height: 70vh;
+  }
+
+  .carousel .list .item {
+    width: 90%;
+  }
+  .carousel .list .item .intro {
+    position: absolute;
+    width: 50%;
+    top: 35%;
+    left: 22%;
+  }
+  .carousel .list .detail .specifications {
+    overflow: auto;
+  }
+  .search {
+    display: none;
+  }
+  .carousel-container button {
+    display: none;
+  }
+  .hero1 {
+    height: 60vh;
+  }
+  .hero1-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    z-index: 1;
+  }
+  .slide {
+    min-width: 100%;
+    height: 100%; /* <--- ADD THIS LINE */
+    position: relative;
+    overflow: hidden; /* Keeps everything tidy */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .yuu h1 {
+    font-size: 2.5rem;
+  }
+}
+/* 2. Mobile Styles (Matches your source media attribute) */
+@media (max-width: 768px) {
+  .slide picture img {
+    /* Styles specifically for the "speakermobile.jpg" */
+    object-fit: cover; /* Example: Ensures whole speaker shows */
+    height: 100%;
+    width: 100%; /* Custom height for mobile */
+    /* You can add filters, borders, etc. here */
+    /* border: 3px solid red; */
+  }
+}
+/* --- Mobile State (Max-Width: 768px) --- */
+@media (max-width: 768px) {
+  /* Hide the Image */
+  .desktop-visual {
+    display: none;
+  }
+
+  /* Show the Video */
+  .mobile-visual {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures video fills the slide without stretching */
+  }
+}
+/* =========================================
+   MOBILE LAYOUT & MENU FIXES
+   ========================================= */
+
+@media screen and (max-width: 991px) {
+  /* 1. MASTER LAYOUT: Force Nav to re-order items */
+  nav#mainNav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 15px; /* Adjust padding for mobile */
+  }
+  nav#mainNavs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px; /* Adjust padding for mobile */
+  }
+
+  /* 2. BUTTON (Hamburger) - Force to LEFT (Order 1) */
+  .mobile-dropdown-trigger {
+    order: 1;
+    display: flex !important; /* Force visible */
+    margin-right: 15px; /* Space between button and logo */
+    position: relative;
+    z-index: 10002; /* Ensure clickable */
+  }
+
+  /* 3. LOGO - Force to CENTER/LEFT (Order 2) */
+  .left {
+    order: 2;
+    margin-right: auto; /* Pushes the Profile to the far right */
+    flex-grow: 0;
+  }
+
+  /* 4. PROFILE/CART - Force to RIGHT (Order 3) */
+  .rightmost {
+    order: 3;
+    display: grid !important;
+    place-items: center !important;
+    /* border: 3px solid green; */
+    padding: 0;
+    /* background-color: red; */
+    height: 60px;
+    width: 70px;
+  }
+
+  /* Ensure specific items inside rightmost are visible/hidden correctly */
+  .rightmost .search {
+    display: none !important;
+  } /* Hide Search on Mobile */
+  .rightmost .cart {
+    display: none !important;
+  } /* Show Cart */
+  .profile-container {
+    display: block !important;
+    margin-left: 0 !important;
+  }
+
+  /* =========================================
+       FIX MISSING DROPDOWN LINKS
+       ========================================= */
+
+  /* The container needs to be ON TOP of the hero section */
+  #dropdown-menu-container {
+    top: 13vh; /* Start exactly below the navbar */
+    /* height: 80vh; Fill the rest of the screen */
+    background: rgba(15, 15, 15, 0.98);
+    z-index: 9998; /* High Z-index */
+    overflow-y: auto;
+    border: 2px solid white;
+  }
+
+  /* FIX THE CLASS CONFLICT: Target specifically the Mobile Menu Links */
+  #dropdown-menu-container .dropdown-linked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 50px;
+    gap: 30px;
+  }
+
+  #dropdown-menu-container .dropdown-linked a {
+    /* Force these specific styles to override the Profile Dropdown styles */
+    color: #ffffff !important;
+    font-family: "Anton", sans-serif !important;
+    font-size: 2.5rem !important; /* Make them big */
+    text-transform: uppercase !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    text-align: center;
+    width: auto !important;
+    pointer-events: auto;
+  }
+
+  /* Reset the "Loading Bar" effect for the mobile menu (optional) */
+  #dropdown-menu-container .dropdown-linked a::after {
+    display: none;
+  }
+}
+@media screen and (max-width: 900px) {
+  /* =========================================
+   1. THE ANIMATED HAMBURGER (Step -> X)
+   ========================================= */
+  .menu-toggle-btn {
+    display: none; /* Hidden on Desktop */
+    cursor: pointer;
+    z-index: 10002;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  /* Show only on Mobile */
+  @media screen and (max-width: 1024px) {
+    .menu-toggle-btn {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* SCOPED Styles - Only affects the .step-icon, nothing else */
+  .step-icon {
+    color: white;
+    overflow: visible;
+  }
+
+  .step-icon .line {
+    /* Physics for the lines only */
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      stroke-dasharray 0.3s ease,
+      opacity 0.2s ease,
+      /* The Dribbble "Bounce" Effect */ transform 0.5s
+        cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Default State (Steps) */
+  .step-icon .top {
+    stroke-dasharray: 16 16;
+  }
+  .step-icon .middle {
+    stroke-dasharray: 10 20;
+  }
+  .step-icon .bottom {
+    stroke-dasharray: 6 20;
+  }
+
+  /* Active State (The X) */
+  .menu-toggle-btn.active .step-icon {
+    color: #645bff;
+  }
+
+  .menu-toggle-btn.active .step-icon .line {
+    stroke-dasharray: 16 16; /* Full width */
+  }
+
+  .menu-toggle-btn.active .step-icon .top {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-toggle-btn.active .step-icon .middle {
+    opacity: 0;
+    transform: translateX(-20px); /* Fly away */
+  }
+
+  .menu-toggle-btn.active .step-icon .bottom {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* =========================================
+   2. THE PROFILE DROPDOWN LINKS (The Protection)
+   ========================================= */
+
+  /* We use Specificity to protect these links from the icon styles */
+
+  .profile-dropdown .dropdown-links a {
+    /* Layout & Text */
+    position: relative !important;
+    display: inline-block !important;
+    width: auto !important;
+
+    /* Appearance */
+    color: #6e6d7a !important; /* Gray by default */
+    font-family: "Poppins", sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    text-decoration: none !important;
+
+    /* Visibility */
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+
+    /* Clean up transitions */
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease !important;
+    transform: none !important; /* Stop the icon animation from affecting links */
+    stroke-dasharray: none !important; /* Remove line styles */
+  }
+
+  /* Hover Effect */
+  .profile-dropdown .dropdown-links a:hover {
+    color: #645bff !important;
+    background: transparent !important;
+    transform: translateX(5px) !important; /* Gentle slide */
+  }
+
+  /* Sign Out Specifics */
+  .profile-dropdown .sign-out-area a {
+    color: #6e6d7a !important;
+  }
+  .profile-dropdown .sign-out-area a:hover {
+    color: #ef4444 !important;
+  }
+}
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    /* Hide the text on mobile to save space */
+    .btn-text {
+        display: none;
+    }
+    
+    /* Make the button a perfect circle on mobile */
+    .back-cart-btn {
+        padding: 8px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.05); /* Slight visible background on mobile */
+    }
+    
+    /* Ensure icon is centered */
+    .arrow-icon {
+        margin: 0;
+        font-size: 1.4rem; /* Slightly larger icon for touch */
+    }
+}
+
+@media screen and (max-width: 1024px) {
+  /* 1. TABLET CAROUSEL HEIGHT */
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 70vh !important; /* Slightly taller than mobile for better tablet viewing */
+    margin-top: 0;
+    overflow: hidden;
+    display: block;
+  }
+
+  .carousel .list {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 2. ITEM VISIBILITY */
+  .carousel .list .item {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 0.5s;
+  }
+
+  .carousel .list .item:nth-child(2) {
+    opacity: 1 !important;
+    z-index: 10;
+  }
+
+  /* 3. TABLET LAYOUT: IMAGE ON RIGHT, TEXT ON LEFT */
+  .carousel .list .item img {
+    position: absolute;
+    width: 40%; /* Scaled properly for tablets */
+    right: 8%; /* More breathing room from the edge */
+    top: 50%;
+    transform: translateY(-50%);
+    object-fit: contain;
+  }
+
+  .carousel .list .item .intro {
+    position: absolute;
+    width: 45%; /* Give text plenty of room so it doesn't wrap awkwardly */
+    left: 1%; /* Align nicely with tablet margins */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px; /* A bit more space between text elements */
+    z-index: 20;
+  }
+
+  /* 4. TABLET TYPOGRAPHY (Bigger than mobile) */
+  .carousel .list .item .intro .topic {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .carousel .list .item .intro .title {
+    font-size: clamp(2.5rem, 5.5vw, 3.5rem); /* Big, bold tablet title */
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .carousel .list .item .intro .des {
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Allow one more line of text on tablets */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .carousel .list .item .intro .seeMore {
+    width: max-content;
+    padding: 12px 25px;
+    font-size: 1rem;
+    margin-top: 10px;
+    pointer-events: auto;
+  }
+
+  /* =========================================
+     TABLET DETAIL VIEW (After clicking See More)
+     ========================================= */
+
+  /* 1. IMAGE: Shifts left but stays large */
+  .carousel.showDetail .list .item img {
+    width: 55%;
+    right: auto;
+    left: -8%; /* Just a slight shift to make room for text */
+    transition: 0.5s;
+  }
+
+  /* 2. TEXT CONTAINER: Takes up the right side */
+  .carousel.showDetail .list .item .detail {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 7%;
+    width: 45%;
+    
+    padding-right: 10px;
+    box-sizing: border-box;
+    z-index: 30;
+  }
+
+  .carousel.showDetail .list .item .detail .title {
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    line-height: 1.1;
+    margin-bottom: 15px;
+  }
+
+  /* HIDE SCROLLBARS FOR TABLET TOO */
+  .carousel.showDetail .list .item .detail .des::-webkit-scrollbar,
+  .carousel.showDetail .list .item .detail .specifications::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .carousel.showDetail .list .item .detail .des,
+  .carousel.showDetail .list .item .detail .specifications {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .carousel.showDetail .list .item .detail .des {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    height: 160px; /* Taller scroll area for tablets */
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+
+  /* 3. BUTTONS: Side-by-Side */
+  .carousel.showDetail .list .item .detail .checkout {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    margin-top: 25px;
+    padding: 8px 8px;
+  }
+
+  .carousel.showDetail .list .item .detail .checkout button {
+    justify-content: center;
+    flex: 1;
+    font-size: 0.9rem; /* Clear readable buttons */
+    white-space: nowrap;
+   
+    padding: 8px 8px; /* Tight padding to fit small screens */
+   
+    white-space: nowrap;
+  }
+
+  /* Hide arrows on tablet (Optional - you can change to flex if you want them) */
+  .arrows{
+    position: absolute;
+    bottom: 10px;
+  }
+  .arrows #next,
+  .arrows #prev {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  /* 1. FORCE THE CONTAINER TO BE VISIBLE */
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 60vh !important; /* Forces it to stay open */
+    margin-top: 0;
+    overflow: hidden; /* Prevents items from falling out of view */
+    display: block;
+  }
+
+  .carousel .list {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 2. MAKE ITEMS VISIBLE */
+  .carousel .list .item {
+    position: absolute; /* Keep 3D stack */
+    inset: 0; /* Shorthand for top:0, left:0, right:0, bottom:0 */
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Hidden by default until JS shows them */
+    transition: 0.5s;
+  }
+
+  /* Force the active item to actually show up */
+  .carousel .list .item:nth-child(2) {
+    opacity: 1 !important;
+    z-index: 10;
+  }
+
+  /* 3. LAYOUT THE CONTENT */
+  .carousel .list .item img {
+    position: absolute;
+    width: 45%;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    object-fit: contain; /* Prevents image distortion */
+  }
+
+  .carousel .list .item .intro {
+    position: absolute;
+    width: 55%;
+    left: 1%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    z-index: 20; /* Keep text above the image */
+  }
+.arrows{
+  position: absolute;
+  bottom: 10px;
+}
+  /* Hide arrows on mobile */
+  .arrows #next,
+  .arrows #prev {
+    display: none !important;
+  }
+
+  /* 4. FLUID TEXT SO IT NEVER CUTS OFF */
+ .carousel .list .item .intro .topic {
+    font-size: clamp(0.9rem, 4vw, 1.1rem); /* Bumped up */
+    letter-spacing: 1px;
+    font-weight: 700; /* Optional: Makes it stand out more */
+    margin: 0;
+  }
+
+  .carousel .list .item .intro .title {
+    font-size: clamp(1.8rem, 7vw, 2.5rem); /* Noticeably bigger and bolder */
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .carousel .list .item .intro .des {
+    font-size: clamp(0.8rem, 3.5vw, 0.95rem);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .carousel .list .item .intro .seeMore {
+    width: max-content;
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    pointer-events: auto; /* Ensures it is clickable */
+  }
+  /* =========================================
+     MOBILE DETAIL VIEW (After clicking See More)
+     ========================================= */
+
+  /* 1. IMAGE: Bigger and shifted left */
+  .carousel.showDetail .list .item img {
+    width: 65%; /* Increased size */
+    right: auto; /* Reset right position */
+    left: -20%; /* Push it off-screen to the left to create space */
+    transition: 0.5s;
+  }
+
+  /* 2. DETAIL TEXT CONTAINER: Positioned right with padding */
+  .carousel.showDetail .list .item .detail {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 50%; /* Takes up the right half of the screen */
+    padding-right: 15px; /* Adds breathing room from right screen edge */
+    box-sizing: border-box;
+    z-index: 30;
+    /* Optional: Align text right for a cleaner look against the right edge */
+    /* text-align: right; */ 
+  }
+
+  .carousel.showDetail .list .item .detail .title {
+    font-size: clamp(1.3rem, 5vw, 1.6rem);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .carousel.showDetail .list .item .detail .des {
+    font-size: clamp(0.75rem, 3.5vw, 0.85rem);
+    height: 130px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    /* Ensure padding doesn't get cut off by scrollbar */
+    padding-left: 5px; 
+  }
+
+  /* 3. BUTTONS: Row layout, shrinking to fit */
+  .carousel.showDetail .list .item .detail .checkout {
+    display: flex;
+    flex-direction: row; /* Keep them side-by-side */
+    gap: 8px;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .carousel.showDetail .list .item .detail .checkout button {
+    flex: 1; /* Makes them share space equally and shrink if needed */
+    padding: 8px 8px; /* Tight padding to fit small screens */
+    font-size: 0.75rem; /* Smaller font for buttons so text fits */
+    white-space: nowrap; /* Prevents "ADD TO CART" from breaking onto two lines */
+    justify-content: center;
+  }
+  /* HIDE SCROLLBAR FOR CLEANER LOOK (But keep scrolling functional) */
+  .carousel.showDetail .list .item .detail .des::-webkit-scrollbar,
+  .carousel.showDetail .list .item .detail .specifications::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .carousel.showDetail .list .item .detail .des,
+  .carousel.showDetail .list .item .detail .specifications {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}

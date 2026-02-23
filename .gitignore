@@ -1,0 +1,21 @@
+# Ignore database connection files with passwords
+config.php
+db.php
+database.php
+connect.php
+
+# Ignore heavy Composer packages
+vendor/
+
+# Ignore the entire config folder containing your real passwords & Google secrets
+config/
+
+# Ignore user/product uploads in the admin panel
+admin/assets/images/*
+
+# BUT keep the admin images folder itself from being deleted
+!admin/assets/images/.gitkeep
+
+# Ignore Windows system thumbnail and folder config junk
+Thumbs.db
+desktop.ini
